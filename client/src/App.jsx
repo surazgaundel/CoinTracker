@@ -6,6 +6,8 @@ const url='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=
 export default function App() {
     const [coin,setCoin]=useState([])
     const [mode,setMode]=useState(true)
+    const [search,setSearch]=useState('')
+
     useEffect(()=>{
         coinFetch(url);
     },[])
@@ -20,23 +22,40 @@ export default function App() {
             console.error(err)
         }
     }
-    const handleMood=()=>{
-        setMode(prev=>!prev);
-
-    }
-    const dayColor={
-        backgroundColor:'#121212'
+    
+    const handleChange=(e)=>{
+        setSearch(e.target.value)
     }
 
+    const filteredCoins=coin.filter(item=>{
+        return item.name.toLowerCase().includes(search.toLowerCase())
+    })
     const nightColor={
-        backgroundColor:'#235658'
+        backgroundColor:'#2B2B2B',
+        color:"#EDF7F1",
+        height:'100vh'
+    }
+
+    const dayColor={
+        backgroundColor:'#F1FEFE',
+        color:'#4F65D1',
+        height:'100vh'
     }
   return (
-    <div style={mode?dayColor:nightColor}>
-      <Nav mode={mode} />
-      <button className='absolute top-0 right-5' onClick={handleMood} >{mode? '🌙':'🔆'}</button>
-      {coin.map(item=>{
-        return (<Coin key={item.id} {...item} />)
+    <div style={mode?dayColor:nightColor} >
+      <Nav mode={mode} handleChange={handleChange}/>
+      <button className='absolute top-0 right-5' onClick={()=>setMode(prev=>!prev)} >{mode? '🌙':'🔆'}</button>
+      {filteredCoins.map(item=>{
+        return (
+        <Coin key={item.id}
+            name={item.name} 
+            image={item.image} 
+            symbol = {item.symbol}
+            marketCap={item.market_cap}
+            price={item.current_price} 
+            priceChange = {item.price_change_percentage_24h}
+            volume = {item.total_volume} 
+            />)
       })}
     </div>
   )

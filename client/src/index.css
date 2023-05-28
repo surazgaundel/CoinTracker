@@ -3,5 +3,8 @@
 @tailwind utilities;
 
 :root{
+    box-sizing: border-box;
     position: relative;
+    margin: 0;
+    padding: 0;
 }

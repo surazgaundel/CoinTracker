@@ -32,14 +32,12 @@ export default function App() {
     })
     const nightColor={
         backgroundColor:'#2B2B2B',
-        color:"#EDF7F1",
-        height:'100vh'
+        color:"#EDF7F1"
     }
 
     const dayColor={
         backgroundColor:'#F1FEFE',
-        color:'#4F65D1',
-        height:'100vh'
+        color:'#4F65D1'
     }
   return (
     <div style={mode?dayColor:nightColor} >
